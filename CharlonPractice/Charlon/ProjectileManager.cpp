@@ -26,9 +26,7 @@ void ProjectileManager::ChangeUnits(std::vector<Unit*>* units)
 // NON STATICS
 
 ProjectileManager::ProjectileManager(int reserveLockOn, int reserveSkillShot)
-    :m_pLockOnProjs{ reserveLockOn }
-    ,m_pSkillShotProjs{ reserveSkillShot }
-    ,m_LastMousePos{0,0}
+    :m_LastMousePos{0,0}
     ,m_LastShooter{ nullptr }
     ,m_pAutoAttackDefault{new AutoAttack(Point2f{0,0},nullptr)}
     ,m_LastAutoAttackUsed{nullptr}
@@ -39,126 +37,50 @@ ProjectileManager::ProjectileManager(int reserveLockOn, int reserveSkillShot)
 
 ProjectileManager::~ProjectileManager()
 {
-    for (size_t i{ 0 }; i < m_pLockOnProjs.size(); ++i)
-    {
-        delete m_pLockOnProjs[i];
-        m_pLockOnProjs[i] = nullptr;
-    }
-    for (size_t i{ 0 }; i < m_pSkillShotProjs.size(); ++i)
-    {
-        delete m_pSkillShotProjs[i];
-        m_pSkillShotProjs[i] = nullptr;
-    }
     delete m_pAutoAttackDefault;
-    m_pAutoAttackDefault = nullptr;
 }
 
 void ProjectileManager::PushBackLockOn(const Point2f& startingPos, Unit* target, float damage, float speed)
 {
-    PushBack(new LockOnProjectile(startingPos, target, damage, speed));
+    
 }
 
 void ProjectileManager::PushBackAutoAttack(const Point2f& startingPos, Unit* target, float damage, float speed)
 {
-    PushBack(new AutoAttack(startingPos, target, damage, speed));
+    
 }
 
 void ProjectileManager::PushBackAutoAttack(AutoAttack* autoAttack)
 {
-    PushBack(autoAttack);
+    delete autoAttack;
 }
 
 void ProjectileManager::PushBackSkillShot(const Point2f& startingPos, const Point2f& destination, float damage, float speed)
 {
-    PushBack(new SkillShotProjectile(startingPos, destination, damage, speed));
+    
 }
 
 void ProjectileManager::PushBack(LockOnProjectile* proj)
 {
-    bool isPointerPushed{ false };
-    for (size_t i{ 0 }; i < m_pLockOnProjs.size(); ++i)
-    {
-        if (m_pLockOnProjs[i] == nullptr)
-        {
-            m_pLockOnProjs[i] = proj;
-            isPointerPushed = true;
-            break;
-        }
-    }
-    if (isPointerPushed == false)
-    {
-        m_pLockOnProjs.push_back(proj);
-    }
+    delete proj;
 }
 
 void ProjectileManager::PushBack(SkillShotProjectile* proj)
 {
-    bool isPointerPushed{ false };
-    for (size_t i{ 0 }; i < m_pSkillShotProjs.size(); ++i)
-    {
-        if (m_pSkillShotProjs[i] == nullptr)
-        {
-            m_pSkillShotProjs[i] = proj;
-            isPointerPushed = true;
-            break;
-        }
-    }
-    if (isPointerPushed == false)
-    {
-        m_pSkillShotProjs.push_back(proj);
-    }
+    delete proj;
 }
 
 void ProjectileManager::DrawAll() const
 {
-    for (LockOnProjectile* proj : m_pLockOnProjs)
-    {
-        if (proj)
-        {
-            proj->Draw();
-        }
-    }
-    for (SkillShotProjectile* proj : m_pSkillShotProjs)
-    {
-        if (proj)
-        {
-            proj->Draw();
-        }
-    }
+    // Draw projectiles
 }
 
 void ProjectileManager::UpdateAll(float elapsedSec)
 {
-    // LOCK ON
-    for (size_t i{ 0 }; i < m_pLockOnProjs.size(); ++i)
-    {
-        if (m_pLockOnProjs[i] == nullptr)
-        {
-            continue;
-        }
-        m_pLockOnProjs[i]->Update(elapsedSec);
-        if (m_pLockOnProjs[i]->HasHit())
-        {
-            delete m_pLockOnProjs[i];
-            m_pLockOnProjs[i] = nullptr;
-        }
-    }
-    TryAutoAttack(m_LastMousePos, m_LastShooter, false);
+    // Update projectiles
 
-    // SKILLSHOT
-    for (size_t i{ 0 }; i < m_pSkillShotProjs.size(); ++i)
-    {
-        if (m_pSkillShotProjs[i] == nullptr)
-        {
-            continue;
-        }
-        m_pSkillShotProjs[i]->Update(elapsedSec);
-        if (m_pSkillShotProjs[i]->ReadyToDelete())
-        {
-            delete m_pSkillShotProjs[i];
-            m_pSkillShotProjs[i] = nullptr;
-        }
-    }
+    // Keep this line
+    TryAutoAttack(m_LastMousePos, m_LastShooter, false);
 }
 
 bool ProjectileManager::TryAutoAttack(const Point2f& mousePos, Champion* shooter, bool isNewInput)

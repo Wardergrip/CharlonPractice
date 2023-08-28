@@ -37,9 +37,6 @@ public:
 	bool TryAutoAttack(const Point2f& mousePos, Champion* shooter, AutoAttack* autoAttack, bool isNewInput = true);
 
 private:
-	std::vector<LockOnProjectile*> m_pLockOnProjs;
-	std::vector<SkillShotProjectile*> m_pSkillShotProjs;
-
 	Point2f m_LastMousePos;
 	Champion* m_LastShooter;
 	AutoAttack* m_pAutoAttackDefault;
