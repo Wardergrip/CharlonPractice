@@ -1,6 +1,6 @@
 # CharlonPractice
 
-This is an excercise for students of the 1st year of DAE. This excercise focuses on:
+This is an excercise for students of the 1st year of GD of DAE. This excercise focuses on:
 - `new` & `delete` / memory management
 - Inheritance and polymorphism
 - Templates
