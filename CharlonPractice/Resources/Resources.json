@@ -1,0 +1,13 @@
+{
+    "textures": {
+        "missing":"Resources/missingTexture.png",
+        "hoover":"Resources/survivor1_machine.png",
+        "silverBullet":"Resources/towerDefense_silverBullet.png"
+    },
+    "soundeffects": {
+        "test" : "Resources/ShootTest.ogg"
+    },
+    "soundstreams":{
+        "sadTheme":"Resources/SadThemev1.mp3"
+    }
+}
