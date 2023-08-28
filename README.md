@@ -27,6 +27,7 @@ This interace must be [CRTP](https://en.wikipedia.org/wiki/Curiously_recurring_t
 ## Ability
 
 Implement Ashe's W from league of legends for the Hoover Champion. Your new ability is not designed to be inherited.
+You should inherit from `Ability`.
 
 ### EXTRA
 ## Custom Container
