@@ -179,7 +179,7 @@ bool ProjectileManager::TryAutoAttack(const Point2f& mousePos, Champion* shooter
         if (m_IsShiftHeld)
         {
             Unit* closestUnit{ shooter->GetClosestUnit(c_Units) };
-            if (closestUnit == nullptr) return;
+            if (closestUnit == nullptr) return false;
             ShooterLogic(shooter, closestUnit,m_LastAutoAttackUsed);
             break;
         }
@@ -218,7 +218,7 @@ bool ProjectileManager::TryAutoAttack(const Point2f& mousePos, Champion* shooter
         if (m_IsShiftHeld)
         {
             Unit* closestUnit{ shooter->GetClosestUnit(c_Units) };
-            if (closestUnit == nullptr) return;
+            if (closestUnit == nullptr) return false;
             ShooterLogic(shooter, closestUnit,autoAttack);
             m_LastAutoAttackUsed = autoAttack;
             break;
